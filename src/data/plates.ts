@@ -54,10 +54,6 @@ export const plates: Plate[] = [
     correct_red_green: ['traceable'], 
     type: 'control' 
   },
-  { id: 22, file: '45.jpg', correct_normal: ['26'], correct_protan: ['6'], correct_deuteran: ['2'], type: 'classification' },
-  { id: 23, file: '46.jpg', correct_normal: ['42'], correct_protan: ['2'], correct_deuteran: ['4'], type: 'classification' },
-  { id: 24, file: '47.jpg', correct_normal: ['35'], correct_protan: ['5'], correct_deuteran: ['3'], type: 'classification' },
-  { id: 25, file: '48.jpg', correct_normal: ['96'], correct_protan: ['6'], correct_deuteran: ['9'], type: 'classification' },
 ];
 
 export const getInstructions = (plate: Plate): string => {
@@ -69,9 +65,9 @@ export const getInstructions = (plate: Plate): string => {
     case 'vanishing':
       return 'Tell me the number you see. If you cannot see any number, say "nothing" or "no number".';
     case 'trace':
-      return 'Describe the line or path you can trace with your eyes. What colors do you see in the traceable path?';
+      return 'Look carefully at the winding lines in this plate. What color or colors can you trace from one end to the other? Say the color name you see in the path. For example, say "orange" or "blue green" or multiple colors if you see them.';
     case 'control':
-      return 'Can you trace a winding line through this plate? Say "traceable" if you can follow a path.';
+      return 'Look at the winding path in this plate. Can you follow a continuous line from one side to the other? If yes, simply say "traceable".';
     case 'classification':
       return 'What number do you see? Look carefully at all the details.';
     default:
