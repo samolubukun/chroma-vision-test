@@ -50,6 +50,12 @@ const TestScreen = ({ onComplete }: TestScreenProps) => {
   }, [timeLeft]);
 
   const checkAnswer = (answer: string): boolean => {
+    // 💡 MODIFICATION START: Make 54.jpg always correct
+    if (currentPlate.file === '54.jpg') {
+      return true; 
+    }
+    // 💡 MODIFICATION END
+
     const normalizedAnswer = answer.toLowerCase().trim().replace(/\s+/g, '');
     
     // Check against all possible correct answers
