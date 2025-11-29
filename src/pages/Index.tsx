@@ -1,13 +1,34 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from 'react';
+import WelcomeScreen from '@/components/WelcomeScreen';
+import TestScreen, { TestResult } from '@/components/TestScreen';
+import ResultsScreen from '@/components/ResultsScreen';
+
+type TestState = 'welcome' | 'testing' | 'results';
 
 const Index = () => {
+  const [testState, setTestState] = useState<TestState>('welcome');
+  const [results, setResults] = useState<TestResult[]>([]);
+
+  const handleStart = () => {
+    setTestState('testing');
+  };
+
+  const handleComplete = (testResults: TestResult[]) => {
+    setResults(testResults);
+    setTestState('results');
+  };
+
+  const handleRestart = () => {
+    setResults([]);
+    setTestState('welcome');
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
-    </div>
+    <>
+      {testState === 'welcome' && <WelcomeScreen onStart={handleStart} />}
+      {testState === 'testing' && <TestScreen onComplete={handleComplete} />}
+      {testState === 'results' && <ResultsScreen results={results} onRestart={handleRestart} />}
+    </>
   );
 };
 
