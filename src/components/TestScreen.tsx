@@ -49,6 +49,34 @@ const TestScreen = ({ onComplete }: TestScreenProps) => {
     }
   }, [timeLeft]);
 
+  const convertWordsToDigits = (text: string): string => {
+    const numberWords: { [key: string]: string } = {
+      'zero': '0', 'one': '1', 'two': '2', 'three': '3', 'four': '4',
+      'five': '5', 'six': '6', 'seven': '7', 'eight': '8', 'nine': '9',
+      'ten': '10', 'eleven': '11', 'twelve': '12', 'thirteen': '13',
+      'fourteen': '14', 'fifteen': '15', 'sixteen': '16', 'seventeen': '17',
+      'eighteen': '18', 'nineteen': '19', 'twenty': '20', 'thirty': '30',
+      'forty': '40', 'fifty': '50', 'sixty': '60', 'seventy': '70',
+      'eighty': '80', 'ninety': '90'
+    };
+
+    let result = text.toLowerCase().trim();
+    
+    // Handle compound numbers like "twenty nine" or "seventy four"
+    const compoundPattern = /(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)[\s-]?(one|two|three|four|five|six|seven|eight|nine)/g;
+    result = result.replace(compoundPattern, (match, tens, ones) => {
+      return String(parseInt(numberWords[tens]) + parseInt(numberWords[ones]));
+    });
+    
+    // Replace individual number words
+    Object.keys(numberWords).forEach(word => {
+      const regex = new RegExp(`\\b${word}\\b`, 'g');
+      result = result.replace(regex, numberWords[word]);
+    });
+    
+    return result;
+  };
+
   const checkAnswer = (answer: string): boolean => {
     // 💡 MODIFICATION START: Make 54.jpg always correct
     if (currentPlate.file === '54.jpg') {
@@ -56,7 +84,9 @@ const TestScreen = ({ onComplete }: TestScreenProps) => {
     }
     // 💡 MODIFICATION END
 
-    const normalizedAnswer = answer.toLowerCase().trim().replace(/\s+/g, '');
+    // Convert words to digits and normalize
+    const convertedAnswer = convertWordsToDigits(answer);
+    const normalizedAnswer = convertedAnswer.toLowerCase().trim().replace(/\s+/g, '');
     
     // Check against all possible correct answers
     const allCorrectAnswers = [
