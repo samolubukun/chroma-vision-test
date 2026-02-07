@@ -2,49 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 @layer base {
   :root {
-    --background: 210 25% 98%;
-    --foreground: 215 25% 15%;
+    --background: 0 0% 100%;
+    --foreground: 224 71% 4%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 25% 15%;
+    --card-foreground: 224 71% 4%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 25% 15%;
+    --popover-foreground: 224 71% 4%;
 
-    --primary: 210 85% 45%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 210 85% 38%;
+    --primary: 250 84% 54%;
+    --primary-foreground: 210 40% 98%;
+    --primary-hover: 250 84% 45%;
 
-    --secondary: 210 20% 92%;
-    --secondary-foreground: 215 25% 15%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 224 71% 4%;
 
-    --muted: 210 20% 95%;
-    --muted-foreground: 215 15% 45%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 155 70% 45%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 250 84% 54%;
+    --accent-foreground: 210 40% 98%;
 
-    --success: 142 76% 36%;
+    --success: 142 71% 45%;
     --warning: 38 92% 50%;
     --error: 0 84% 60%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 210 20% 88%;
-    --input: 210 20% 88%;
-    --ring: 210 85% 45%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 250 84% 54%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
 
-    --timer-bg: 38 92% 50%;
+    --timer-bg: 250 84% 54%;
     --timer-fg: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
+
+    --card: 224 71% 4%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 224 71% 4%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 250 84% 54%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 40% 98%;
+
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 263.4 70% 50.4%;
   }
 }
 
@@ -54,14 +79,55 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Outfit', sans-serif;
+    @apply tracking-tight;
   }
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap');
-
 @layer utilities {
-  .font-sans {
-    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-md border border-white/10 shadow-xl;
+  }
+
+  .premium-gradient {
+    @apply bg-gradient-to-br from-primary via-primary/90 to-blue-600;
+  }
+
+  .mesh-gradient {
+    background-color: hsla(250, 84%, 54%, 1);
+    background-image:
+      radial-gradient(at 0% 0%, hsla(250, 84%, 54%, 0.15) 0px, transparent 50%),
+      radial-gradient(at 50% 0%, hsla(180, 84%, 54%, 0.1) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(250, 84%, 54%, 0.15) 0px, transparent 50%);
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }

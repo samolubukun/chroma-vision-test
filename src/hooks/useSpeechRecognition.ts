@@ -12,18 +12,27 @@ export const useSpeechRecognition = ({ onResult, onError }: UseSpeechRecognition
 
   useEffect(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    
+
     if (SpeechRecognition) {
       setIsSupported(true);
       recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = false;
+      recognitionRef.current.continuous = true;
       recognitionRef.current.interimResults = false;
       recognitionRef.current.lang = 'en-US';
 
       recognitionRef.current.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        onResult(transcript.toLowerCase());
-        setIsListening(false);
+        const lastResultIndex = event.results.length - 1;
+        const transcript = event.results[lastResultIndex][0].transcript.toLowerCase().trim();
+
+        // Filter for numbers or specific keywords
+        const isNumber = /^\d+$/.test(transcript);
+        const isNone = transcript.includes('nothing') || transcript.includes('no number') || transcript.includes('none') || transcript === '0';
+
+        if (isNumber || isNone) {
+          onResult(transcript);
+        } else {
+          console.log('Ignored non-numeric input:', transcript);
+        }
       };
 
       recognitionRef.current.onerror = (event: any) => {
