@@ -184,7 +184,7 @@ const TestScreen = ({ onComplete }: TestScreenProps) => {
               {/* Full Square Image for Mobile focus */}
               <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-white/50 rounded-xl md:rounded-none">
                 <img
-                  src={`/plates/${currentPlate.file}`}
+                  src={`${import.meta.env.BASE_URL}plates/${currentPlate.file}`}
                   alt={`Ishihara Plate ${currentPlate.id}`}
                   className="w-full h-full object-contain filter drop-shadow-sm md:drop-shadow-2xl"
                   onError={(e) => {
