@@ -4,30 +4,60 @@ import TestScreen, { TestResult } from '@/components/TestScreen';
 import ResultsScreen from '@/components/ResultsScreen';
 
 type TestState = 'welcome' | 'testing' | 'results';
+type Eye = 'left' | 'right';
 
 const Index = () => {
   const [testState, setTestState] = useState<TestState>('welcome');
-  const [results, setResults] = useState<TestResult[]>([]);
+  const [currentEye, setCurrentEye] = useState<Eye>('left');
+  const [leftResults, setLeftResults] = useState<TestResult[]>([]);
+  const [rightResults, setRightResults] = useState<TestResult[]>([]);
 
   const handleStart = () => {
     setTestState('testing');
+    setCurrentEye('left');
+    setLeftResults([]);
+    setRightResults([]);
   };
 
   const handleComplete = (testResults: TestResult[]) => {
-    setResults(testResults);
+    if (currentEye === 'left') {
+      setLeftResults(testResults);
+    } else {
+      setRightResults(testResults);
+    }
     setTestState('results');
   };
 
+  const handleNextEye = () => {
+    setCurrentEye('right');
+    setTestState('testing');
+  };
+
   const handleRestart = () => {
-    setResults([]);
+    setLeftResults([]);
+    setRightResults([]);
+    setCurrentEye('left');
     setTestState('welcome');
   };
 
   return (
     <>
       {testState === 'welcome' && <WelcomeScreen onStart={handleStart} />}
-      {testState === 'testing' && <TestScreen onComplete={handleComplete} />}
-      {testState === 'results' && <ResultsScreen results={results} onRestart={handleRestart} />}
+      {testState === 'testing' && (
+        <TestScreen
+          eye={currentEye}
+          onComplete={handleComplete}
+        />
+      )}
+      {testState === 'results' && (
+        <ResultsScreen
+          eye={currentEye}
+          results={currentEye === 'left' ? leftResults : rightResults}
+          otherEyeResults={currentEye === 'right' ? leftResults : undefined}
+          onNextEye={handleNextEye}
+          onRestart={handleRestart}
+        />
+      )}
     </>
   );
 };

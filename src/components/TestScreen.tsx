@@ -8,6 +8,7 @@ import { plates, getInstructions } from '@/data/plates';
 import { useToast } from '@/hooks/use-toast';
 
 interface TestScreenProps {
+  eye: 'left' | 'right';
   onComplete: (results: TestResult[]) => void;
 }
 
@@ -18,7 +19,8 @@ export interface TestResult {
   timeRemaining: number;
 }
 
-const TestScreen = ({ onComplete }: TestScreenProps) => {
+const TestScreen = ({ eye, onComplete }: TestScreenProps) => {
+  const [isStarted, setIsStarted] = useState(false);
   const [currentPlateIndex, setCurrentPlateIndex] = useState(0);
   const [userInput, setUserInput] = useState('');
   const [timeLeft, setTimeLeft] = useState(20);
@@ -83,6 +85,8 @@ const TestScreen = ({ onComplete }: TestScreenProps) => {
   };
 
   const handleSubmit = () => {
+    if (!isStarted) return;
+
     const isCorrect = checkAnswer(userInput);
 
     const result: TestResult = {
@@ -129,14 +133,40 @@ const TestScreen = ({ onComplete }: TestScreenProps) => {
 
   // Timer
   useEffect(() => {
+    if (!isStarted) return;
+
     if (timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
     } else {
       handleSubmit();
     }
-  }, [timeLeft]);
+  }, [timeLeft, isStarted]);
 
+
+  if (!isStarted) {
+    return (
+      <div className="h-screen w-full flex items-center justify-center p-4 bg-background">
+        <Card className="max-w-md w-full p-8 text-center space-y-6 shadow-2xl glass-morphism border-primary/20">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-black text-foreground tracking-tight">
+              {eye === 'left' ? 'Left Eye' : 'Right Eye'} Test
+            </h2>
+            <p className="text-muted-foreground font-medium">
+              Please cover your <span className="text-primary font-bold">{eye === 'left' ? 'RIGHT' : 'LEFT'}</span> eye and use only your <span className="text-primary font-bold">{eye === 'left' ? 'LEFT' : 'RIGHT'}</span> eye for this part of the assessment.
+            </p>
+          </div>
+          <Button
+            onClick={() => setIsStarted(true)}
+            size="lg"
+            className="w-full h-14 rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90 font-bold text-lg shadow-lg hover:scale-[1.02] transition-transform"
+          >
+            I'm Ready, Start Test
+          </Button>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="h-[100dvh] w-full flex flex-col bg-background overflow-hidden p-3 md:p-8">
@@ -149,7 +179,9 @@ const TestScreen = ({ onComplete }: TestScreenProps) => {
               <span className="font-bold text-primary text-xs md:text-base">{currentPlateIndex + 1}</span>
             </div>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground hidden sm:block">Progress</p>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground hidden sm:block">
+                Progress ({eye === 'left' ? 'Left Eye' : 'Right Eye'})
+              </p>
               <div className="flex items-center gap-2">
                 <Progress value={progress} className="h-1 w-16 sm:w-32 md:w-48" />
                 <span className="text-[10px] md:text-xs font-medium text-muted-foreground">{Math.round(progress)}%</span>
@@ -170,7 +202,7 @@ const TestScreen = ({ onComplete }: TestScreenProps) => {
           <div className="md:col-span-3 flex flex-col items-center justify-center relative p-3 md:p-6 min-h-0 flex-shrink-0 md:bg-white md:border md:border-slate-200 md:shadow-xl md:rounded-3xl md:overflow-hidden">
             {/* Absolute Overlays for Mobile Only */}
             <div className="absolute top-0 left-0 md:top-3 md:left-3 inline-flex items-center gap-2 px-2 py-0.5 md:px-3 md:py-1 rounded-full bg-white/90 md:bg-slate-50 text-[8px] md:text-[10px] font-bold uppercase tracking-widest text-muted-foreground border border-slate-100 italic z-30 shadow-sm">
-              Plate {currentPlate.id}
+              {eye === 'left' ? 'Left' : 'Right'} Eye - Plate {currentPlate.id}
             </div>
 
             {/* Floating Timer on Mobile */}
