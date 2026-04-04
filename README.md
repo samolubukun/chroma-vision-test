@@ -2,7 +2,7 @@
 
 A professional-grade, interactive **Ishihara Color Vision Test** built with React, TypeScript, and Vite. This application provides a rapid, accurate screening tool for red-green color vision deficiencies (CVD) using the standardized 17-plate diagnostic protocol.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://samolubukun.github.io/chroma-vision-test/)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](chroma-vision-test.pxxl.click)
 
 ## 🚀 Key Features
 
