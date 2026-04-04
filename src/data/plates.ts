@@ -18,12 +18,15 @@ export const plates: Plate[] = [
   { id: 6, file: '29.jpg', correct_normal: ['5'], correct_red_green: ['2'], options: ['5', '2', '3', '8'], type: 'diagnostic' },
   { id: 7, file: '30.jpg', correct_normal: ['3'], correct_red_green: ['5'], options: ['3', '5', '2', '6'], type: 'diagnostic' },
   { id: 8, file: '31.jpg', correct_normal: ['15'], correct_red_green: ['17'], options: ['15', '17', '12', '16'], type: 'diagnostic' },
-  { id: 9, file: '32.jpg', correct_normal: ['74'], correct_red_green: ['21'], options: ['74', '21', '73', '70'], type: 'diagnostic' },
-  { id: 10, file: '33.jpg', correct_normal: ['2'], correct_red_green: ['nothing', '0', 'no number'], options: ['2', '0', '5', '8'], type: 'vanishing' },
-  { id: 11, file: '34.jpg', correct_normal: ['6'], correct_red_green: ['nothing', '0', 'no number'], options: ['6', '0', '8', '3'], type: 'vanishing' },
-  { id: 12, file: '35.jpg', correct_normal: ['97'], correct_red_green: ['nothing', '0', 'no number'], options: ['97', '9', '7', '18'], type: 'vanishing' },
-  { id: 13, file: '36.jpg', correct_normal: ['45'], correct_red_green: ['nothing', '0', 'no number'], options: ['45', '4', '5', '10'], type: 'vanishing' },
-  { id: 14, file: '38.jpg', correct_normal: ['7'], correct_red_green: ['nothing', '0', 'no number'], options: ['7', '0', '1', '9'], type: 'vanishing' },
+  { id: 9, file: '32.jpg', correct_normal: ['74'], correct_red_green: ['21'], options: ['74', '21', '73', '70', 'Blank'], type: 'diagnostic' },
+  { id: 10, file: '33.jpg', correct_normal: ['2'], correct_red_green: ['nothing', '0', 'no number', 'Blank'], options: ['2', '0', '5', '8', 'Blank'], type: 'vanishing' },
+  { id: 11, file: '34.jpg', correct_normal: ['6'], correct_red_green: ['nothing', '0', 'no number', 'Blank'], options: ['6', '0', '8', '3', 'Blank'], type: 'vanishing' },
+  { id: 12, file: '35.jpg', correct_normal: ['97'], correct_red_green: ['nothing', '0', 'no number', 'Blank'], options: ['97', '9', '7', '18', 'Blank'], type: 'vanishing' },
+  { id: 13, file: '36.jpg', correct_normal: ['45'], correct_red_green: ['nothing', '0', 'no number', 'Blank'], options: ['45', '4', '5', '10', 'Blank'], type: 'vanishing' },
+  { id: 14, file: '38.jpg', correct_normal: ['7'], correct_red_green: ['nothing', '0', 'no number', 'Blank'], options: ['7', '0', '1', '9', 'Blank'], type: 'vanishing' },
+  { id: 15, file: '43.jpg', correct_normal: ['0', 'Blank'], correct_red_green: ['45'], options: ['45', '4', '5', 'Blank'], type: 'vanishing' },
+  { id: 16, file: '45.jpg', correct_normal: ['26'], correct_protan: ['6'], correct_deuteran: ['2'], options: ['26', '6', '2', '28', 'Blank'], type: 'classification' },
+  { id: 17, file: '46.jpg', correct_normal: ['42'], correct_protan: ['2'], correct_deuteran: ['4'], options: ['42', '2', '4', '48', 'Blank'], type: 'classification' },
 ];
 
 export const getInstructions = (plate: Plate): string => {
@@ -33,13 +36,13 @@ export const getInstructions = (plate: Plate): string => {
     case 'diagnostic':
       return 'Identify the number in the plate and select the corresponding option.';
     case 'vanishing':
-      return 'Select the number you see, or choose the "0" or "none" option if no number is visible.';
+      return 'Select the number you see, or choose the "Blank" option if no number is visible.';
+    case 'classification':
+      return 'Identify the numbers you see. There might be more than one digit.';
     case 'trace':
       return 'Follow the winding lines and select the path you see from the options below.';
     case 'control':
       return 'Can you follow a continuous line from one side to the other? Select your answer below.';
-    case 'classification':
-      return 'Examine the details carefully and select the number you see below.';
     default:
       return 'Select the option that matches what you see in the plate.';
   }

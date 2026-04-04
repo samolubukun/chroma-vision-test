@@ -43,9 +43,8 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
 
                 <ul className="space-y-5">
                   {[
-                    { icon: Eye, text: "14 Ishihara Plates", detail: "Clinical standard images" },
-                    { icon: Mic, text: "Voice Control", detail: "Hands-free interaction" },
-                    { icon: Keyboard, text: "Instant Analysis", detail: "Real-time accuracy scoring" }
+                    { icon: Eye, text: "17 Standardized Plates", detail: "Comprehensive set for accurate screening" },
+                    { icon: Sparkles, text: "Instant Analysis", detail: "Immediate results upon completion" }
                   ].map((item, idx) => (
                     <li key={idx} className="flex gap-4">
                       <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center">
