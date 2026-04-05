@@ -54,16 +54,6 @@ A professional-grade, interactive **Ishihara Color Vision Test** built with Reac
     npm run build
     ```
 
-## 📦 Deployment
-
-This project is configured for easy deployment to **GitHub Pages**:
-
-```bash
-npm run deploy
-```
-
-For other platforms (Vercel, Render, Railway), ensure your **Root Directory** is set to `.` and your **Output Directory** is `dist`.
-
 ## ⚠️ Medical Disclaimer
 
 *This application is for educational and screening purposes only. While it uses standardized Ishihara plates and logic, it is not a substitute for a formal clinical evaluation by a licensed eye care professional (optometrist or ophthalmologist). Always consult a specialist for a definitive diagnosis.*
